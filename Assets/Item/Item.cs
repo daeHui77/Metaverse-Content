@@ -5,28 +5,37 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public AudioClip[] gameAudiosource;
-    AudioSource audioSource;
+    AudioSource audiosource;
+    Animator animator;
+
+    int[] coinScore = new int[3];
+  
     // Start is called before the first frame update
     void Start()
     {
-        audioSource.GetComponent<AudioSource>();
-    }
+        coinScore[0] = 10;
+        coinScore[1] = 50;
+        coinScore[2] = 100;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        animator = GetComponent<Animator>();
+        audiosource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            audioSource.clip = gameAudiosource[0];
-            audioSource.Play();
-            Destroy(transform.gameObject);
+            EventItemSound();
+            animator.SetTrigger("ItemAdd");
+            Destroy(transform.gameObject,1.0f);
+            other.GetComponent<ItemAdd>().Coinsum(coinScore[0]);
             Debug.Log("삭제");
         }
-        
+    }
+    public void EventItemSound()
+    {
+        Debug.Log("먹는 소리");
+        audiosource.clip = gameAudiosource[0];
+        audiosource.Play();
     }
 }
