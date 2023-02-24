@@ -5,25 +5,31 @@ using UnityEngine.UI;
 public class ItemAdd : MonoBehaviour
 {
     public int coinSum;
-    public int coinCount;
     public Text coinText;
+    
+    //코인 개수 표시
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
         {
-            coinText.text = "소지 코인 = " + coinSum;
+            coinText.text = coinSum.ToString();
         }
     }
-    public void CoinCount()
-    {
-        coinCount += 1;
-    }
+    //코인개수 가져오기
     public int GetCoinCount()
     {
-       return coinCount;
+       return coinSum;
     }
+    //코인 갯수 더하기
     public void Coinsum(int coin)
     {
         coinSum += coin;
+        Debug.Log(coinSum);
+    }
+     //코인 갯수 빼기
+    public void CoinSubtract(int coin)
+    {
+        coinSum -= coin;
+        coinText.text = coinSum.ToString();
     }
 }

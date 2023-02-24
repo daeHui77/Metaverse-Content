@@ -33,11 +33,25 @@ public class CharacterStatus : MonoBehaviour
     void Update()
     {
         UseStamina();
-        if (Input.GetKeyDown(KeyCode.K))
+
+        if(healthBar.GetHealth() <= 0)
+        {
+            GetComponent<MoveFuc>().GameReset();
+            FillHP();
+        }
+    }
+
+    private void OnTriggerStay(Collider other) {
+        if(other.CompareTag("MagemaGround"))
+        {
+            TakeDamage(1);
+        }
+    }
+    private void OnCollisionEnter(Collision collision) {
+         if(collision.gameObject.CompareTag("Monster"))
         {
             TakeDamage(20);
         }
-        
     }
     public void UseStamina()
     {
@@ -45,22 +59,19 @@ public class CharacterStatus : MonoBehaviour
         if (git == false)
         {
             GetComponent<MoveFuc>().MoveFast();
-            //TakeStaminaDamage(20);
         }
         if (currentStamina < 0)
         {
             git = true;
             //Time.deltaTime로 딜레이주기
             timer += Time.deltaTime;
-            //Debug.Log(timer);
-            //Debug.Log(Time.deltaTime);
+            
 
             //딜레이 이후 실행
             if (timer > waitingTime)
             {
                 timer = 0.0f;
                 waitingTime = 2.0f;
-                Debug.Log("1");
                 TakeStaminaHealing(100);
                 git = false;
             }
@@ -70,6 +81,13 @@ public class CharacterStatus : MonoBehaviour
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        healthBar.SetHealth(currentHealth);
+    }
+    //체력 회복
+    void FillHP()
+    {
+        currentHealth = maxHealth;
 
         healthBar.SetHealth(currentHealth);
     }

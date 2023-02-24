@@ -7,7 +7,8 @@ public class PlayerAnimationFuc : MonoBehaviour
     float v;
     float h;
     Animator animator;
-
+    
+    private Rigidbody rigid;
     public AudioClip[] audiosource;
     AudioSource audioSource;
    
@@ -16,10 +17,12 @@ public class PlayerAnimationFuc : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        
     }
     // Update is called once per frame
     void Update()
     {
+        
         Move();
     }
     //오디오를 이용해 걷는 소리
@@ -103,4 +106,5 @@ public class PlayerAnimationFuc : MonoBehaviour
             }
         }
     }
+    
 }

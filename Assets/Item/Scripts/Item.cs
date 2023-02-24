@@ -30,13 +30,10 @@ public class Item : MonoBehaviour
             animator.SetTrigger("ItemAdd");
             Destroy(transform.gameObject,0.5f);
             other.GetComponent<ItemAdd>().Coinsum(coinScore[0]);
-            other.GetComponent<ItemAdd>().CoinCount();
-            Debug.Log("삭제");
         }
     }
     public void EventItemSound()
     {
-        Debug.Log("먹는 소리");
         audiosource.clip = gameAudiosource[0];
         audiosource.Play();
     }
